@@ -1,16 +1,47 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Grid } from '@mui/material';
 import './App.css'
+import HeaderUI from './Components/HeaderUI';
+import AlertUI from './Components/AlertUI';
 
 function App() {
-  const [count, setCount] = useState(0)
+   return (
+      <Grid 
+         container 
+         spacing={5} 
+         justifyContent="center" 
+         alignItems="center"
+      >
 
-  return (
-   <div>
-            <h1>Bienvenido al Dashboard</h1>
-        </div>
-  )
+         {/* Encabezado */}
+         <Grid><HeaderUI /></Grid>
+
+         {/* Alertas */}
+         <Grid 
+            container 
+            justifyContent="flex-end" 
+            alignItems="center"
+         >
+            <AlertUI description="No se preveen lluvias" />
+         </Grid>
+
+         {/* Selector */}
+         <Grid>Elemento: Selector</Grid>
+
+         {/* Indicadores */}
+         <Grid>Elemento: Indicadores</Grid>
+
+         {/* Gráfico */}
+         <Grid sx={{ display: { xs: 'none', md: 'block' } }}>Elemento: Gráfico</Grid>
+
+         {/* Tabla */}
+         <Grid sx={{ display: { xs: 'none', md: 'block' } }}>Elemento: Tabla</Grid>
+
+         {/* Información adicional */}
+         <Grid>Elemento: Información adicional</Grid>
+
+      </Grid>
+   );
 }
 
 export default App
