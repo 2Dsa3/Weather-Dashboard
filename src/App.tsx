@@ -4,6 +4,7 @@ import './App.css'
 import HeaderUI from './Components/HeaderUI';
 import AlertUI from './Components/AlertUI';
 import SelectorUI from './Components/SelectorUI';
+import IndicatorUI from './Components/IndicatorUI';
 
 function App() {
    return (
@@ -30,7 +31,25 @@ function App() {
          <Grid><SelectorUI /></Grid>
 
          {/* Indicadores */}
-         <Grid>Elemento: Indicadores</Grid>
+         <Grid container size={{ xs: 12, md: 9 }} >
+
+                 <Grid size={{ xs: 12, md: 3 }}>
+                     <IndicatorUI title='Temperatura (2m)' description='XX°C' />
+                 </Grid>
+
+                 <Grid size={{ xs: 12, md: 3 }}>
+                     <IndicatorUI title='Temperatura aparente' description='YY°C' />
+                 </Grid>
+
+                 <Grid size={{ xs: 12, md: 3 }}>
+                     <IndicatorUI title='Velocidad del viento' description='ZZkm/h' />
+                 </Grid>
+
+                 <Grid size={{ xs: 12, md: 3 }}>
+                     <IndicatorUI title='Humedad relativa' description='NN%' />
+                 </Grid>
+
+             </Grid>
 
          {/* Gráfico */}
          <Grid sx={{ display: { xs: 'none', md: 'block' } }}>Elemento: Gráfico</Grid>
