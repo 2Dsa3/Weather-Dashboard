@@ -2,8 +2,13 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import Typography from '@mui/material/Typography';
 import DataFetcher from '../functions/DataFetcher';
 
-export default function ChartUI() {
-   const { data, loading, error } = DataFetcher();
+interface ChartUIProps {
+  lat: number;
+  lon: number;
+}
+
+export default function ChartUI({ lat, lon }: ChartUIProps) {
+   const { data, loading, error } = DataFetcher(lat, lon);
 
    if (loading) {
       return <Typography>Cargando datos de la gráfica...</Typography>;

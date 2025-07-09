@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Grid, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import './App.css'
 import HeaderUI from './Components/HeaderUI';
@@ -7,6 +8,13 @@ import IndicatorUI from './Components/IndicatorUI';
 import DataFetcher from './functions/DataFetcher';
 import ChartUI from './Components/ChartUI';
 import TableUI from './Components/TableUI';
+
+const cities = [
+  { value: "guayaquil", label: "Guayaquil", lat: -2.170998, lon: -79.922359 },
+  { value: "quito", label: "Quito", lat: -0.180653, lon: -78.467834 },
+  { value: "manta", label: "Manta", lat: -0.967653, lon: -80.708910 },
+  { value: "cuenca", label: "Cuenca", lat: -2.900128, lon: -79.005896 }
+];
 
 const darkTheme = createTheme({
   palette: {
@@ -23,16 +31,19 @@ const darkTheme = createTheme({
 });
 
 function App() {
+   // Estado para la ciudad seleccionada
+   const [selectedCity, setSelectedCity] = useState(cities[0]);
 
-   const dataFetcherOutput = DataFetcher();
+   // Pasa lat/lon a DataFetcher
+   const dataFetcherOutput = DataFetcher(selectedCity.lat, selectedCity.lon);
 
-   if (dataFetcherOutput.loading) {
+  /* if (dataFetcherOutput.loading) {
       return <div>Cargando datos del clima...</div>;
    }
 
    if (dataFetcherOutput.error) {
       return <div>Error: {dataFetcherOutput.error}</div>;
-   }
+   }*/
 
    return (
     <ThemeProvider theme={darkTheme}>
@@ -58,7 +69,13 @@ function App() {
          </Grid>
 
          {/* Selector */}
-         <Grid><SelectorUI /></Grid>
+         <Grid>
+           <SelectorUI
+             cities={cities}
+             selectedCity={selectedCity}
+             setSelectedCity={setSelectedCity}
+           />
+         </Grid>
 
          {/* Indicadores */}
          <Grid container>
@@ -105,21 +122,26 @@ function App() {
          </Grid>
 
          {/* Gráfico */}
-           <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
-              <ChartUI />
-           </Grid>
+         <Grid sx={{ display: { xs: "none", md: "block" } }}>
+            <ChartUI
+              key={selectedCity.value}
+              lat={selectedCity.lat}
+              lon={selectedCity.lon}
+            />
+         </Grid>
 
-           {/* Tabla */}
-           <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
-              <TableUI />
-           </Grid>
-
-         {/* Información adicional */}
-         <Grid>Elemento: Información adicional</Grid>
+         {/* Tabla */}
+         <Grid sx={{ display: { xs: "none", md: "block" } }}>
+            <TableUI
+              key={selectedCity.value}
+              lat={selectedCity.lat}
+              lon={selectedCity.lon}
+            />
+         </Grid>
 
       </Grid>
     </ThemeProvider>
    );
 }
 
-export default App
+export default App;

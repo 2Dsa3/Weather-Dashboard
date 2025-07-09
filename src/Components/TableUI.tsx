@@ -39,8 +39,13 @@ const columns: GridColDef[] = [
    },
 ];
 
-export default function TableUI() {
-   const { data, loading, error } = DataFetcher();
+interface TableUIProps {
+  lat: number;
+  lon: number;
+}
+
+export default function TableUI({ lat, lon }: TableUIProps) {
+   const { data, loading, error } = DataFetcher(lat, lon);
 
    if (loading) {
       return <Box sx={{ height: 350, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Cargando datos...</Box>;
@@ -50,7 +55,6 @@ export default function TableUI() {
       return <Box sx={{ height: 350, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main' }}>Error al cargar datos</Box>;
    }
 
-   // Usar los primeros 7 datos para la tabla
    const arrLabels = data.hourly.time.slice(0, 14);
    const arrValues1 = data.hourly.temperature_2m.slice(0, 14);
    const arrValues2 = data.hourly.wind_speed_10m.slice(0, 14);
