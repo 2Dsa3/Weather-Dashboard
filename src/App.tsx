@@ -5,6 +5,8 @@ import AlertUI from './Components/AlertUI';
 import SelectorUI from './Components/SelectorUI';
 import IndicatorUI from './Components/IndicatorUI';
 import DataFetcher from './functions/DataFetcher';
+import ChartUI from './Components/ChartUI';
+import TableUI from './Components/TableUI';
 
 const darkTheme = createTheme({
   palette: {
@@ -103,10 +105,14 @@ function App() {
          </Grid>
 
          {/* Gráfico */}
-         <Grid sx={{ display: { xs: 'none', md: 'block' } }}>Elemento: Gráfico</Grid>
+           <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+              <ChartUI />
+           </Grid>
 
-         {/* Tabla */}
-         <Grid sx={{ display: { xs: 'none', md: 'block' } }}>Elemento: Tabla</Grid>
+           {/* Tabla */}
+           <Grid size={{ xs: 6, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
+              <TableUI />
+           </Grid>
 
          {/* Información adicional */}
          <Grid>Elemento: Información adicional</Grid>
