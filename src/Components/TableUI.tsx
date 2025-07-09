@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import DataFetcher from '../functions/DataFetcher';
 
 function combineArrays(arrLabels: Array<string>, arrValues1: Array<number>, arrValues2: Array<number>) {
    return arrLabels.map((label, index) => ({
@@ -14,18 +15,18 @@ const columns: GridColDef[] = [
    { field: 'id', headerName: 'ID', width: 90 },
    {
       field: 'label',
-      headerName: 'Label',
-      width: 150,
+      headerName: 'Hora',
+      width: 180,
    },
    {
       field: 'value1',
-      headerName: 'Value 1',
-      width: 150,
+      headerName: 'Temperatura (°C)',
+      width: 180,
    },
    {
       field: 'value2',
-      headerName: 'Value 2',
-      width: 150,
+      headerName: 'Viento (km/h)',
+      width: 180,
    },
    {
       field: 'resumen',
@@ -33,16 +34,26 @@ const columns: GridColDef[] = [
       description: 'No es posible ordenar u ocultar esta columna.',
       sortable: false,
       hideable: false,
-      width: 160,
+      width: 220,
       valueGetter: (_, row) => `${row.label || ''} ${row.value1 || ''} ${row.value2 || ''}`,
    },
 ];
 
-const arrValues1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const arrValues2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const arrLabels = ['A','B','C','D','E','F','G'];
-
 export default function TableUI() {
+   const { data, loading, error } = DataFetcher();
+
+   if (loading) {
+      return <Box sx={{ height: 350, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Cargando datos...</Box>;
+   }
+
+   if (error || !data) {
+      return <Box sx={{ height: 350, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main' }}>Error al cargar datos</Box>;
+   }
+
+   // Usar los primeros 7 datos para la tabla
+   const arrLabels = data.hourly.time.slice(0, 14);
+   const arrValues1 = data.hourly.temperature_2m.slice(0, 14);
+   const arrValues2 = data.hourly.wind_speed_10m.slice(0, 14);
 
    const rows = combineArrays(arrLabels, arrValues1, arrValues2);
 
