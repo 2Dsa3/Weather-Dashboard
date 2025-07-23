@@ -37,14 +37,6 @@ function App() {
    // Pasa lat/lon a DataFetcher
    const dataFetcherOutput = DataFetcher(selectedCity.lat, selectedCity.lon);
 
-  /* if (dataFetcherOutput.loading) {
-      return <div>Cargando datos del clima...</div>;
-   }
-
-   if (dataFetcherOutput.error) {
-      return <div>Error: {dataFetcherOutput.error}</div>;
-   }*/
-
    return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -53,23 +45,25 @@ function App() {
          spacing={5} 
          justifyContent="center" 
          alignItems="center"
-         sx={{ minHeight: "100vh", backgroundColor: "background.default" }}
+         sx={{ minHeight: "100vh", backgroundColor: "background.default", padding: 2 }}
       >
 
-         {/* Encabezado */}
-         <Grid><HeaderUI /></Grid>
-
-         {/* Alertas */}
-         <Grid 
-            container 
-            justifyContent="flex-end" 
-            alignItems="center"
-         >
-            <AlertUI description="No se preveen lluvias" />
+         {/* Encabezado - 12 columnas en todas las pantallas */}
+         <Grid size={{ xs: 12 }}>
+            <HeaderUI />
          </Grid>
 
-         {/* Selector */}
-         <Grid>
+         {/* Alertas - 12 columnas en todas las pantallas */}
+         <Grid size={{ xs: 12 }}>
+            <AlertUI description={
+               dataFetcherOutput.data?.current.relative_humidity_2m && dataFetcherOutput.data.current.relative_humidity_2m > 80
+                  ? "Alta humedad detectada"
+                  : "Condiciones normales"
+            } />
+         </Grid>
+
+         {/* Selector - 3 columnas en md+, 12 en xs */}
+         <Grid size={{ xs: 12, md: 3 }}>
            <SelectorUI
              cities={cities}
              selectedCity={selectedCity}
@@ -77,9 +71,9 @@ function App() {
            />
          </Grid>
 
-         {/* Indicadores */}
-         <Grid container>
-            <Grid>
+         {/* Indicadores - 9 columnas en md+, 12 en xs */}
+         <Grid container size={{ xs: 12, md: 9 }} spacing={2}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                <IndicatorUI
                   title='Temperatura (2m)'
                   description={
@@ -89,7 +83,7 @@ function App() {
                   }
                />
             </Grid>
-            <Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                <IndicatorUI
                   title='Temperatura aparente'
                   description={
@@ -99,7 +93,7 @@ function App() {
                   }
                />
             </Grid>
-            <Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                <IndicatorUI
                   title='Velocidad del viento'
                   description={
@@ -109,7 +103,7 @@ function App() {
                   }
                />
             </Grid>
-            <Grid>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                <IndicatorUI
                   title='Humedad relativa'
                   description={
@@ -121,8 +115,8 @@ function App() {
             </Grid>
          </Grid>
 
-         {/* Gráfico */}
-         <Grid sx={{ display: { xs: "none", md: "block" } }}>
+         {/* Gráfico - 6 columnas en md+, oculto en xs */}
+         <Grid size={{ md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
             <ChartUI
               key={selectedCity.value}
               lat={selectedCity.lat}
@@ -130,12 +124,24 @@ function App() {
             />
          </Grid>
 
-         {/* Tabla */}
-         <Grid sx={{ display: { xs: "none", md: "block" } }}>
+         {/* Tabla - 6 columnas en md+, oculta en xs */}
+         <Grid size={{ md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>
             <TableUI
               key={selectedCity.value}
               lat={selectedCity.lat}
               lon={selectedCity.lon}
+            />
+         </Grid>
+
+         {/* Información adicional - 12 columnas */}
+         <Grid size={{ xs: 12 }}>
+            <IndicatorUI
+               title='Información adicional'
+               description={
+                  dataFetcherOutput.data
+                     ? `Ubicación: ${selectedCity.label} (${dataFetcherOutput.data.latitude.toFixed(2)}, ${dataFetcherOutput.data.longitude.toFixed(2)}) | Zona horaria: ${dataFetcherOutput.data.timezone}`
+                     : 'Cargando información de ubicación...'
+               }
             />
          </Grid>
 

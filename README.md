@@ -1,6 +1,8 @@
-# React + TypeScript + Vite
+# Dashboard del Clima - Proyecto 04
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción
+
+Dashboard interactivo del clima desarrollado con React, TypeScript y Material-UI (MUI) que muestra información meteorológica en tiempo real de las principales ciudades del Ecuador. El proyecto utiliza la API de Open-Meteo para obtener datos climáticos actuales y pronósticos.
 
 Currently, two official plugins are available:
 

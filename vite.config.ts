@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/dashboard/",
+  base: "/Weather-Dashboard/",
   plugins: [
       react(),
       VitePWA({
@@ -11,7 +11,7 @@ export default defineConfig({
    devOptions: { enabled: true },
    includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
    manifest: {
-      id: '/dashboard/',
+      id: '/Weather-Dashboard/',
       name: 'Dashboard del Clima - Proyecto 04',
       short_name: 'Dashboard del Clima',
       description: 'Proyecto 04 - dashboard del clima desarrollado con React y MUI',
