@@ -23,10 +23,11 @@ const DataFetcher = (lat: number, lon: number): DataFetcherResult => {
       setLoading(true);
       setError(null);
 
+      let cachedData: string | null = null;
       try {
-        const cached: string | null = localStorage.getItem(storageKey);
-        if (cached) {
-          const parsed = JSON.parse(cached);
+        cachedData = localStorage.getItem(storageKey);
+        if (cachedData) {
+          const parsed = JSON.parse(cachedData);
           const age = Date.now() - parsed.timestamp;
 
           if (age < CACHE_DURATION_MS) {
@@ -51,8 +52,8 @@ const DataFetcher = (lat: number, lon: number): DataFetcherResult => {
           })
         );
       } catch (err: any) {
-        if (cached) {
-          const parsed = JSON.parse(cached);
+        if (cachedData) {
+          const parsed = JSON.parse(cachedData);
           setData(parsed.data);
           setError("Error en la API, usando datos almacenados.");
         } else {
